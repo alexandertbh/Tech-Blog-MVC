@@ -9,15 +9,8 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Content: {
+    content: {
       type: DataTypes.TEXT,
-    },
-    due_date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        isDate: true,
-      },
     },
   },
   {

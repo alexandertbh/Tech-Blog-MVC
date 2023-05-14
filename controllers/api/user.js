@@ -21,8 +21,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const userId = await Project.findByPk(req.params.id, {
-      include: [{ model: Task }],
+    const userId = await User.findByPk(req.params.id, {
+      //   include: [{ model: User }],
     });
 
     if (!userId) {
@@ -38,27 +38,30 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const User = {
-      username: req.body.username,
-      password: req.body.password,
+    const newUser = {
+      userName: req.body.userName,
       email: req.body.email,
+      password: req.body.password,
     };
     const dbResponse = await User.create(newUser);
 
-    await dbResponse.addUser(req.session.user_id);
+    if (req.body.postId) {
+      await dbResponse.addPost(req.body.posId);
+    }
+    req.session.user_id = dbResponse.dataValues.id;
+    req.session.logged_in = true;
 
-    const formatData = await dbResponse.get({ plain: true });
-    // console.log("formatData:", formatData)
-    res.status(200).json(formatData);
+    return res.status(200).json(dbResponse);
   } catch (err) {
-    res.status(500).json({ err: err });
+    console.log(err);
+    return res.status(500).json({ msg: "error occurred", err: err });
   }
 });
 
 router.put("/:id", (req, res) => {
   User.update(
     {
-      username: req.body.username,
+      userName: req.body.userName,
       password: req.body.password,
       email: req.body.email,
     },

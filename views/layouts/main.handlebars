@@ -1,0 +1,31 @@
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" />
+    <title>Tech Blog</title>
+  </head>
+
+  <body class="bg-gray-200">
+    <header>
+      <h1>Tech Blog MVC</h1>
+    </header>
+    <nav>
+      <ul class="">
+        <a href="/">Home</a>
+        {{#if logged_in}}
+          <button id="logout">Logout</button>
+          <script src="/js/logout.js"></script>
+        {{else}}
+          <a href="/login">Login</a>
+        {{/if}}
+      </ul>
+    </nav>
+    <main>
+
+      {{{body}}}
+
+    </main>
+  </body>
+
+</html>

@@ -3,8 +3,8 @@ const router = require("express").Router();
 const userRoutes = require("./user");
 router.use("/users", userRoutes);
 
-// const taskRoutes = require('./post')
-// router.use("/tasks", taskRoutes)
+const postRoutes = require("./post");
+router.use("/posts", postRoutes);
 
 // const projectRoutes = require('./comment')
 // router.use("/projects", projectRoutes)
