@@ -91,4 +91,11 @@ router.get("/CreatePost", async (req, res) => {
   }
 });
 
+router.get("/post/:id", (req, res) => {
+  Post.findByPk(req.params.id, {}).then((dbResponse) => {
+    const taskData = dbResponse.get({ plain: true });
+    res.render("edit_post", taskData);
+  });
+});
+
 module.exports = router;
