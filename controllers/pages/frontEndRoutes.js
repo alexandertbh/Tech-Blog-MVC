@@ -48,24 +48,40 @@ router.get("/login", (req, res) => {
 
 router.get("/", (req, res) => {
   if (req.session.logged_in) {
-    return res.redirect("/");
-  }
-  Post.findAll({
-    include: [User],
-  }).then((postData) => {
-    const hbsData = postData.map((post) => post.get({ plain: true }));
-    console.log(hbsData);
-    res.render("homepage", {
-      allPosts: hbsData,
-      logged_in: req.session.logged_in,
+    Post.findAll({
+      include: [User],
+    }).then((postData) => {
+      const hbsData = postData.map((post) => post.get({ plain: true }));
+      console.log(hbsData);
+      res.render("homepage", {
+        allPosts: hbsData,
+        logged_in: req.session.logged_in,
+      });
+      // return res.redirect("/");
     });
-  });
+  } else {
+    someObj = {};
+    res.render("login");
+  }
 });
 
 router.get("/posts", async (req, res) => {
   if (req.session.logged_in) {
     try {
       res.render("posts_overview", { logged_in: req.session.logged_in });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ msg: "an error occured", err: err });
+    }
+  } else {
+    res.redirect("/login");
+  }
+});
+
+router.get("/CreatePost", async (req, res) => {
+  if (req.session.logged_in) {
+    try {
+      res.render("create_posts", { logged_in: req.session.logged_in });
     } catch (err) {
       console.log(err);
       return res.status(500).json({ msg: "an error occured", err: err });
