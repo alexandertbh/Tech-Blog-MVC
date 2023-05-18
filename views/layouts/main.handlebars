@@ -4,23 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" />
     <title>Tech Blog</title>
+    <link rel="stylesheet" href="css/style.css" />
+
   </head>
 
   <body class="bg-gray-200">
     <header>
       <h1>Tech Blog MVC</h1>
+
+      <nav>
+        <ul class="">
+          <a href="/">Home</a>
+          {{#if logged_in}}
+            <button id="logout">Logout</button>
+            <script src="/js/logout.js"></script>
+          {{else}}
+            <a href="/login">Login</a>
+          {{/if}}
+        </ul>
+      </nav>
     </header>
-    <nav>
-      <ul class="">
-        <a href="/">Home</a>
-        {{#if logged_in}}
-          <button id="logout">Logout</button>
-          <script src="/js/logout.js"></script>
-        {{else}}
-          <a href="/login">Login</a>
-        {{/if}}
-      </ul>
-    </nav>
     <main>
 
       {{{body}}}

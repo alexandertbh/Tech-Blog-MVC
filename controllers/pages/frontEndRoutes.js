@@ -65,6 +65,15 @@ router.get("/", (req, res) => {
   }
 });
 
+router.get("/sign_up", async (req, res) => {
+  try {
+    res.render("sign_up");
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: "some error", err: err });
+  }
+});
+
 router.get("/posts", async (req, res) => {
   if (req.session.logged_in) {
     try {
@@ -92,8 +101,11 @@ router.get("/CreatePost", async (req, res) => {
 });
 
 router.get("/post/:id", (req, res) => {
-  Post.findByPk(req.params.id, {}).then((dbResponse) => {
+  Post.findByPk(req.params.id, {
+    include: [User],
+  }).then((dbResponse) => {
     const taskData = dbResponse.get({ plain: true });
+    console.log("taskData:", taskData);
     res.render("edit_post", taskData);
   });
 });
