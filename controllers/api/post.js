@@ -44,7 +44,7 @@ router.post("/", async (req, res) => {
   try {
     const newPost = {
       title: req.body.title,
-      content: req.body.content,
+      comment: req.body.content,
     };
     const dbResponse = await Post.create(newPost);
 
